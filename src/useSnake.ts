@@ -8,7 +8,7 @@ export type Food = Pos & { type: FoodType };
 
 export const FOOD_TYPES: { type: FoodType; emoji: string; points: number }[] = [
   { type: "apple",    emoji: "🍎", points: 10 },
-  { type: "lexsnale", emoji: "🍌", points: 10 },
+  { type: "lexsnake", emoji: "🍌", points: 10 },
 ];
 
 export const LEVELS = [
