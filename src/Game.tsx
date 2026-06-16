@@ -101,7 +101,7 @@ export default function Game({ onGameOver, levelIdx }: GameProps) {
       </div>
 
       <p style={{ color: "#2a2a2a", fontSize: "0.65rem", letterSpacing: "0.12em" }}>
-        ARROW KEYS / WASD &nbsp;·&nbsp; 🐻 CHASES YOUR TAIL &nbsp;·&nbsp; 🪨 SLOWS YOU DOWN
+        ARROW KEYS / WASD &nbsp;·&nbsp; 🐻 CHASES YOU &nbsp;·&nbsp; 🪨 SLOWS YOU DOWN
       </p>
     </div>
   );
