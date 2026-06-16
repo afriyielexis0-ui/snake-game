@@ -14,7 +14,7 @@ function fmtTime(s: number) {
 }
 
 export default function Game({ onGameOver, levelIdx }: GameProps) {
-  const { snake, food, food2, score, elapsed, cols, rows, predator, obstacles, slowed } = useSnake(onGameOver, levelIdx);
+  const { snake, food, score, elapsed, cols, rows, predator, obstacles, slowed } = useSnake(onGameOver, levelIdx);
   const lvl = LEVELS[levelIdx];
 
   const snakeSet = new Set(snake.map(s => `${s.x},${s.y}`));
@@ -65,7 +65,6 @@ export default function Game({ onGameOver, levelIdx }: GameProps) {
             const key = `${x},${y}`;
             const isSnake = snakeSet.has(key);
             const isFood = food.x === x && food.y === y;
-            const isFood2 = food2.x === x && food2.y === y;
             const head = isHead(x, y);
             const pred = isPredator(x, y);
             const isObstacle = obstacleSet.has(key);
@@ -75,7 +74,6 @@ export default function Game({ onGameOver, levelIdx }: GameProps) {
             if (isSnake && !head) bg = lvl.color + "cc";
             if (head) bg = lvl.color;
             if (pred) bg = "#8b0000";
-            const isAnyFood = isFood || isFood2;
 
             return (
               <div
@@ -83,20 +81,19 @@ export default function Game({ onGameOver, levelIdx }: GameProps) {
                 style={{
                   width: CELL,
                   height: CELL,
-                  background: isAnyFood ? "transparent" : bg,
+                  background: isFood ? "transparent" : bg,
                   boxSizing: "border-box",
                   borderRadius: head ? 3 : pred ? 4 : 0,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  fontSize: (isAnyFood || isObstacle || pred) ? "13px" : undefined,
+                  fontSize: (isFood || isObstacle || pred) ? "13px" : undefined,
                   border: isObstacle && !isSnake && !pred ? "1px solid #3d2800" : undefined,
                 }}
               >
-                {isFood && !pred && "🍌"}
-                {isFood2 && !pred && "🍎"}
+                {isFood && !pred && "🍎"}
                 {pred && "🐻"}
-                {isObstacle && !isAnyFood && !isSnake && !pred && "🪨"}
+                {isObstacle && !isFood && !isSnake && !pred && "🪨"}
               </div>
             );
           })
