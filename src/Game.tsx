@@ -1,4 +1,4 @@
-import { useSnake, LEVELS } from "./useSnake";
+import { useSnake, LEVELS, FOOD_TYPES } from "./useSnake";
 
 const CELL = 24;
 
@@ -91,7 +91,7 @@ export default function Game({ onGameOver, levelIdx }: GameProps) {
                   border: isObstacle && !isSnake && !pred ? "1px solid #3d2800" : undefined,
                 }}
               >
-                {isFood && !pred && "🍎"}
+                {isFood && !pred && (FOOD_TYPES.find(ft => ft.type === food.type)?.emoji ?? "🍎")}
                 {pred && "🐻"}
                 {isObstacle && !isFood && !isSnake && !pred && "🪨"}
               </div>
@@ -101,7 +101,7 @@ export default function Game({ onGameOver, levelIdx }: GameProps) {
       </div>
 
       <p style={{ color: "#2a2a2a", fontSize: "0.65rem", letterSpacing: "0.12em" }}>
-        ARROW KEYS / WASD &nbsp;·&nbsp; 🐻 CHASES YOU &nbsp;·&nbsp; 🪨 SLOWS YOU DOWN
+        ARROW KEYS / WASD &nbsp;·&nbsp; 🍌 LEXSNALE &nbsp;·&nbsp; 🐻 CHASES YOU &nbsp;·&nbsp; 🪨 SLOWS YOU DOWN
       </p>
     </div>
   );
