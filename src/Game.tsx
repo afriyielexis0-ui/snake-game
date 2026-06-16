@@ -29,7 +29,7 @@ export default function Game({ onGameOver, levelIdx }: GameProps) {
         display: "flex", justifyContent: "space-between", alignItems: "center",
         width: cols * CELL, color: "#555", fontSize: "0.75rem", letterSpacing: "0.15em"
       }}>
-        <span>SNAKE</span>
+        <span>LEXSNAKE</span>
         <div style={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
           {slowed && (
             <span style={{ color: "#ff9900", fontSize: "0.65rem", letterSpacing: "0.15em", animation: "blink 0.6s step-end infinite" }}>
