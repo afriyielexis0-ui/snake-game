@@ -3,14 +3,6 @@ import { useState, useEffect, useCallback, useRef } from "react";
 export type Dir = "UP" | "DOWN" | "LEFT" | "RIGHT";
 export type Pos = { x: number; y: number };
 
-export type FoodType = "apple" | "lexsnake";
-export type Food = Pos & { type: FoodType };
-
-export const FOOD_TYPES: { type: FoodType; emoji: string; points: number }[] = [
-  { type: "apple",    emoji: "🍎", points: 10 },
-  { type: "lexsnake", emoji: "🍌", points: 10 },
-];
-
 export const LEVELS = [
   { level: 1, label: "EASY",   tick: 160, color: "#39ff14" },
   { level: 2, label: "NORMAL", tick: 120, color: "#00e5ff" },
@@ -29,12 +21,6 @@ function randomPos(excluded: Pos[]): Pos {
     pos = { x: Math.floor(Math.random() * COLS), y: Math.floor(Math.random() * ROWS) };
   } while (excluded.some(s => s.x === pos.x && s.y === pos.y));
   return pos;
-}
-
-function randomFood(excluded: Pos[]): Food {
-  const pos = randomPos(excluded);
-  const { type } = FOOD_TYPES[Math.floor(Math.random() * FOOD_TYPES.length)];
-  return { ...pos, type };
 }
 
 function generateObstacles(snake: Pos[], food: Pos): Pos[] {
@@ -93,12 +79,12 @@ function chaseStep(predator: Pos, target: Pos, obstacles: Pos[], snake: Pos[]): 
 export function useSnake(onGameOver: (score: number, time: number) => void, levelIdx: number) {
   const tick = LEVELS[levelIdx].tick;
   const initSnake: Pos[] = [{ x: 10, y: 10 }, { x: 9, y: 10 }, { x: 8, y: 10 }];
-  const initFood = randomFood(initSnake);
+  const initFood = randomPos(initSnake);
   const initObstacles = generateObstacles(initSnake, initFood);
   const initPredator: Pos = { x: 0, y: 0 };
 
   const [snake, setSnake] = useState<Pos[]>(initSnake);
-  const [food, setFood] = useState<Food>(initFood);
+  const [food, setFood] = useState<Pos>(initFood);
   const [obstacles, setObstacles] = useState<Pos[]>(initObstacles);
   const [predator, setPredator] = useState<Pos>(initPredator);
   const [score, setScore] = useState(0);
@@ -177,10 +163,9 @@ export function useSnake(onGameOver: (score: number, time: number) => void, leve
     if (f.x === next.x && f.y === next.y) {
       const grown = [next, ...prev];
       newSnake = grown;
-      const points = FOOD_TYPES.find(ft => ft.type === f.type)?.points ?? 10;
-      scoreRef.current += points;
+      scoreRef.current += 10;
       setScore(scoreRef.current);
-      const newFood = randomFood([...grown, ...obs]);
+      const newFood = randomPos([...grown, ...obs]);
       foodRef.current = newFood;
       setFood(newFood);
       // Refresh obstacles on each food eat
