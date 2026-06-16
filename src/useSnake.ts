@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 export type Dir = "UP" | "DOWN" | "LEFT" | "RIGHT";
 export type Pos = { x: number; y: number };
 
-export type FoodType = "apple" | "lexsnale";
+export type FoodType = "apple" | "lexsnake";
 export type Food = Pos & { type: FoodType };
 
 export const FOOD_TYPES: { type: FoodType; emoji: string; points: number }[] = [
